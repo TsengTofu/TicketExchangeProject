@@ -10,7 +10,7 @@ jobs:
       MY_SECRET   : ${{secrets.commit_secret}}
       USER_NAME   : TsengTofu
       USER_EMAIL  : tsengbatty@gmail.com
-      PUBLISH_DIR : ./build
+      PUBLISH_DIR : ./dist
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -24,6 +24,10 @@ jobs:
     - name: npm install
       run: |
         npm install
+    - name: npm run build
+      run: |
+        npm run gulp m
+        npm run build
     - name: Commit files
       run: |
         cd $PUBLISH_DIR
@@ -36,5 +40,4 @@ jobs:
         git add --all
         git commit -m "deploy to Github pages"
         git push origin gh-pages -f
-        echo $MY_SECRET
         echo 🤘 deploy gh-pages complete.
